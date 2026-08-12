@@ -1,7 +1,5 @@
 # CẨM NANG GIẢI NGỐ DỰ ÁN (THE ULTIMATE GUIDE)
 
-File này được sinh ra để giúp bất kỳ ai (dù không có nền tảng sâu về Data Science) cũng có thể hiểu tường tận 100% dự án **Predicting Product Sales (Dự báo doanh thu sản phẩm)** này. Đọc xong file này, bạn đủ sức tự tin đi bảo vệ đồ án hoặc phỏng vấn!
-
 ---
 
 ## 1. Mục tiêu của dự án là gì?
