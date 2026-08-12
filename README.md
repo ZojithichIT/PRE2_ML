@@ -105,3 +105,11 @@ python src/evaluate.py
 python src/predict.py
 ```
 *The output of `predict.py` will display the projected total sales for various future milestones.*
+
+---
+
+## 👥 Contributors
+
+This project was developed with the assistance of advanced AI models:
+- **[Gemini](https://gemini.google.com/)** 
+- **[Claude](https://claude.ai/)**
