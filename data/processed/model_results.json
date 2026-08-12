@@ -1,0 +1,34 @@
+{
+  "results": {
+    "Linear Regression": {
+      "MAE": 11169.9,
+      "MSE": 189899295.89,
+      "RMSE": 13780.4
+    },
+    "Decision Tree": {
+      "MAE": 12694.57,
+      "MSE": 248156049.2,
+      "RMSE": 15752.97
+    },
+    "Random Forest": {
+      "MAE": 11293.49,
+      "MSE": 195569773.27,
+      "RMSE": 13984.63
+    },
+    "Gradient Boosting": {
+      "MAE": 11210.83,
+      "MSE": 193658659.8,
+      "RMSE": 13916.13
+    }
+  },
+  "best_model": "Linear Regression",
+  "features": [
+    "Year",
+    "Month",
+    "DayOfWeek",
+    "DayOfMonth",
+    "WeekOfYear",
+    "Quarter",
+    "IsWeekend"
+  ]
+}
