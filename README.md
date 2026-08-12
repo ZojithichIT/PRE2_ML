@@ -16,7 +16,8 @@ This project is a **Time-Series Forecasting** problem that applies Machine Learn
 ML_Project_Predicting_Product_Sales/
 │
 ├── README.md               # Project overview (You are reading this)
-├── 314.md                  # Detailed discussion log and Q&A
+├── 314.md                  # AI chat history
+├── GiaiNgo.md              # Q&A for ZojiNguSi 
 │
 ├── docs/                   # Documentation for each Phase (01 to 11)
 │   ├── 01_DEFINE_PROBLEM.md
@@ -99,17 +100,9 @@ python src/train.py
 ```bash
 python src/evaluate.py
 ```
-
+   
 **6. Deploy & Predict Future Sales:**
 ```bash
 python src/predict.py
 ```
 *The output of `predict.py` will display the projected total sales for various future milestones.*
-
----
-
-## 👥 Contributors
-
-This project was developed with the assistance of advanced AI models:
-- **[Gemini](https://gemini.google.com/)** 
-- **[Claude](https://claude.ai/)**
