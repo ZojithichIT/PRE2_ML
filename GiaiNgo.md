@@ -90,5 +90,62 @@ A: Đề bài yêu cầu lý tưởng nhất là có các dữ liệu về khác
 **Q7: Đề bài có gợi ý dùng ARIMA hoặc Prophet cho Time-Series, tại sao lại dùng Linear Regression, Decision Tree, Random Forest?**
 A: Đề bài yêu cầu rõ ở Bước 3 (Model Selection) là: "Consider regression algorithms like linear regression, decision trees, random forests, or gradient boosting". Chúng ta đã bám sát và cài đặt thành công 100% CẢ 4 thuật toán này từ con số 0 (không dùng thư viện có sẵn). Việc dùng ARIMA hay Prophet chỉ nằm ở phần "Additional Considerations" (Cân nhắc thêm). Việc dùng Linear Regression trích xuất đặc trưng thời gian thực chất hoạt động rất hiệu quả và đáp ứng đúng, đủ trọng tâm Bước 3 của đề.
 
+**Q8: Sự khác biệt giữa Parameters (Tham số) và Hyperparameters (Siêu tham số) trong Machine Learning là gì?**
+A: Parameters là các giá trị mà mô hình tự học được từ dữ liệu trong quá trình huấn luyện (ví dụ: các trọng số W và hệ số bias b trong phương trình Linear Regression). Ngược lại, Hyperparameters là các giá trị do người dùng thiết lập trước khi huấn luyện để điều khiển quá trình học (ví dụ: Learning Rate (tốc độ học) trong Gradient Descent, số lượng cây trong Random Forest, độ sâu tối đa của Decision Tree).
+
+**Q9: Overfitting (Quá khớp) và Underfitting (Chưa khớp) là gì? Làm sao để nhận biết chúng?**
+A: **Overfitting** là hiện tượng mô hình "học thuộc lòng" dữ liệu huấn luyện (Training set), bao gồm cả nhiễu, nhưng dự đoán rất kém trên dữ liệu mới (Test set). Nhận biết: Lỗi trên tập Train rất thấp, nhưng lỗi trên tập Test rất cao. **Underfitting** là khi mô hình quá đơn giản, không đủ khả năng học được quy luật của dữ liệu. Nhận biết: Lỗi cao trên cả tập Train và tập Test.
+
+**Q10: Tại sao chúng ta cần chia dữ liệu thành tập Train (Huấn luyện) và tập Test (Kiểm tra)?**
+A: Việc chia dữ liệu giúp đánh giá khách quan khả năng tổng quát hóa (generalization) của mô hình trên dữ liệu nó chưa từng thấy. Nếu dùng toàn bộ dữ liệu để huấn luyện và đánh giá trên chính dữ liệu đó, chúng ta sẽ không biết liệu mô hình thực sự đã "hiểu" quy luật hay chỉ đơn giản là "học thuộc lòng" (Overfitting).
+
+**Q11: Các độ đo MSE, RMSE, MAE, và R-squared (R2) khác nhau như thế nào khi đánh giá mô hình Hồi quy?**
+A: **MAE (Mean Absolute Error)** đo trung bình sai số tuyệt đối, dễ hiểu và ít bị ảnh hưởng bởi nhiễu (outliers). **MSE (Mean Squared Error)** bình phương sai số, "phạt" nặng các dự đoán có sai lệch lớn. **RMSE (Root Mean Squared Error)** là căn bậc hai của MSE, đưa sai số về cùng đơn vị đo với biến mục tiêu. **R2-Score** đo lường tỷ lệ phương sai của biến mục tiêu được giải thích bởi mô hình, có giá trị thường từ 0 đến 1, càng gần 1 mô hình càng tốt.
+
+**Q12: Cây quyết định (Decision Tree) trong bài toán này có dễ bị Overfitting không? Làm sao để khắc phục?**
+A: Có, Decision Tree rất dễ bị Overfitting vì thuật toán có xu hướng chia nhỏ dữ liệu cho đến khi mỗi lá (leaf) chứa rất ít điểm dữ liệu, nghĩa là nó cố gắng học thuộc lòng luôn cả nhiễu. Để khắc phục, chúng ta có thể áp dụng cắt tỉa (pruning) bằng cách giới hạn độ sâu tối đa của cây (`max_depth`), hoặc quy định số lượng mẫu tối thiểu để tiếp tục chia nhánh. Sử dụng Random Forest cũng là một cách giải quyết triệt để vấn đề này.
+
+**Q13: Tại sao Gradient Boosting lại thường cho kết quả khác biệt so với Random Forest dù cả hai đều là phương pháp Ensemble (Kết hợp nhiều cây)?**
+A: **Random Forest** xây dựng nhiều cây quyết định một cách độc lập và song song, sau đó lấy trung bình dự đoán (đối với hồi quy). Mục đích chính là giảm phương sai (variance) để chống Overfitting.
+Ngược lại, **Gradient Boosting** xây dựng các cây một cách tuần tự (sequential). Cây sau sẽ tập trung vào việc sửa chữa những sai sót (residual errors) của cây trước đó. Do đó, Gradient Boosting thường đạt độ chính xác cao hơn nhưng cũng dễ bị Overfitting hơn và tốn nhiều thời gian huấn luyện hơn nếu không tinh chỉnh kỹ các hyperparameter.
+
+**Q14: Làm thế nào để kết luận mô hình nào trong 4 mô hình (Linear, Tree, Forest, Boosting) là phù hợp nhất cho dự án dự báo doanh thu này?**
+A: Quyết định dựa trên việc so sánh các độ đo đánh giá (RMSE, R2-Score) tính toán trên tập Test. Mô hình phù hợp nhất là mô hình có **R2-Score cao nhất** (giải thích được nhiều nhất sự biến thiên của doanh thu) và **RMSE thấp nhất** (sai số dự báo trung bình nhỏ nhất), ĐỒNG THỜI không có sự chênh lệch quá lớn về hiệu suất giữa tập Train và tập Test (để đảm bảo không bị Overfitting). Trong thực tế, các mô hình Ensemble (như Random Forest hay Gradient Boosting) thường cho kết quả tốt hơn mô hình tuyến tính đơn giản khi dữ liệu có nhiều mối quan hệ phi tuyến tính.
+
+### CÁC CÂU HỎI THEO 3 TIÊU CHÍ ĐÁNH GIÁ LAB
+
+**PHẦN 1: DEFINE PROBLEM (Xác định bài toán)**
+**Q15: Bài toán này thuộc nhóm học máy nào (Supervised, Unsupervised, hay Reinforcement)? Tại sao?**
+A: Đây là bài toán **Học có giám sát (Supervised Learning)**, cụ thể là bài toán **Hồi quy (Regression)**. Lý do là vì dữ liệu đầu vào đã có sẵn nhãn (label) hoặc giá trị mục tiêu (target) cần dự đoán, đó là Tổng doanh thu (`Total_Sales`), mang giá trị số thực liên tục.
+
+**Q16: Đầu vào (Input - X) và Đầu ra (Output - y) của bài toán này là gì?**
+A: 
+- **Đầu vào (X):** Các đặc trưng được trích xuất từ thời gian (Năm, Tháng, Quý, Ngày trong tuần, Có phải cuối tuần không...).
+- **Đầu ra (y):** Biến mục tiêu cần dự báo là Tổng doanh thu (`Total_Sales`) của ngày tương ứng.
+
+**PHẦN 2: DATA UNDERSTANDING (Hiểu và Xử lý dữ liệu)**
+**Q17: Tại bước EDA (Exploratory Data Analysis - Khám phá dữ liệu), bạn rút ra được insight quan trọng nào ảnh hưởng đến việc chọn đặc trưng?**
+A: Thông qua quá trình trực quan hóa (EDA), chúng tôi nhận thấy `Total_Sales` có tính chu kỳ (seasonality) và xu hướng (trend) biến động rõ rệt theo thời gian (ví dụ: doanh thu tăng vọt vào cuối tuần). Insight này là lý do chính để chúng tôi thực hiện Feature Engineering, biến cột ngày tháng dạng chuỗi thành các cột đặc trưng số (`DayOfWeek`, `Month`, `IsWeekend`) để thuật toán có thể học được.
+
+**Q18: Khái niệm Data Leakage đã được thể hiện và xử lý như thế nào trong bài toán này?**
+A: Trong bộ dữ liệu gốc, tổng doanh thu của từng món (S-P1, S-P2,...) khi cộng lại sẽ đúng bằng `Total_Sales`. Nếu giữ các cột này làm đầu vào (Input), mô hình sẽ "học lỏm" (leakage) tương lai vì trong thực tế, bạn không thể biết doanh thu từng món của ngày mai trước khi biết tổng doanh thu ngày mai. Do đó, chúng tôi phải loại bỏ (drop) toàn bộ các cột S-P và Q-P, ép mô hình dự báo hoàn toàn dựa trên lịch thời gian.
+
+**PHẦN 3: MODELING (Mô hình hóa)**
+**Q19: Baseline model (mô hình cơ sở) của dự án này là gì và tại sao lại cần nó?**
+A: Baseline model trong dự án này là **Linear Regression**. Việc sử dụng mô hình tuyến tính đơn giản làm mốc (baseline) giúp chúng ta có thước đo chuẩn. Khi huấn luyện các mô hình phức tạp hơn (như Random Forest, Gradient Boosting), nếu chúng không mang lại chỉ số RMSE hoặc R2 tốt hơn đáng kể so với Baseline, ta sẽ giữ lại Baseline theo nguyên tắc Occam's Razor (ưu tiên mô hình đơn giản, tính toán nhẹ và dễ giải thích).
+
+**Q20: Quá trình chuẩn hóa dữ liệu (Data Scaling) có tác động giống nhau lên tất cả các mô hình trong lab này không?**
+A: **Không.** Quá trình chuẩn hóa (dùng `StandardScaler`) cực kỳ quan trọng và bắt buộc đối với **Linear Regression** vì thuật toán này dùng phương trình đại số/gradient descent, sự chênh lệch thang đo (Năm 2024 vs Tháng 1-12) sẽ gây mất ổn định ma trận. Ngược lại, các thuật toán Tree-based như **Decision Tree, Random Forest, Gradient Boosting** chia cắt không gian dữ liệu bằng cách tìm các điểm ngưỡng (threshold splits), do đó chúng hoàn toàn không bị ảnh hưởng bởi thang đo dữ liệu, chuẩn hóa hay không kết quả vẫn không đổi.
+
+**PHẦN 4: ĐÁNH GIÁ VÀ CẢI TIẾN (Evaluation & Improvement)**
+**Q21: Tại sao chúng ta không dùng K-Fold Cross Validation ngẫu nhiên trong dự án này?**
+A: Với dữ liệu mang tính chuỗi thời gian (Time Series) như dự báo doanh thu, thứ tự thời gian là cốt lõi (sự kiện hôm nay ảnh hưởng đến ngày mai). K-Fold Cross Validation thông thường sẽ xáo trộn (shuffle) dữ liệu một cách ngẫu nhiên. Điều này làm phá vỡ tính liên tục của thời gian, dẫn đến sai lầm cực kỳ nghiêm trọng là dùng dữ liệu tương lai để huấn luyện và dự đoán quá khứ (Look-ahead bias). Nếu muốn dùng Cross Validation, ta bắt buộc phải dùng kỹ thuật **Time Series Split** (cuộn tiến dần theo thời gian).
+
+**Q22: Việc tạo thêm đặc trưng như `IsWeekend` có thực sự cần thiết khi mô hình Cây có thể tự học từ `DayOfWeek` không?**
+A: Rất cần thiết. Dù lý thuyết là Decision Tree có thể tự tìm ra quy luật từ biến `DayOfWeek` (ví dụ, nó tự nhận ra nhánh > 4 là cuối tuần), việc "mớm" sẵn cho nó một biến nhị phân 0/1 (`IsWeekend`) giúp thuật toán cắt nhánh (split) nhanh và trực tiếp hơn rất nhiều. Điều này làm giảm số lượng câu hỏi mà cây phải hỏi, giúp cây nông hơn (giảm độ sâu), từ đó tăng tốc độ học và hạn chế Overfitting.
+
+**Q23: Trong quá trình làm Lab, làm sao bạn phát hiện ra mô hình đang bị Underfitting?**
+A: Mô hình bị **Underfitting (chưa khớp)** khi nó quá đơn giản và không nắm bắt được quy luật của dữ liệu. Chúng tôi nhận biết điều này nếu cả chỉ số lỗi trên tập Train (Train RMSE) và tập Test (Test RMSE) đều rất lớn, đồng thời R2-Score ở cả 2 tập đều thấp (thậm chí gần 0). Ví dụ, nếu chúng ta không làm Feature Engineering mà chỉ truyền mỗi biến `Year` vào mô hình Linear Regression, mô hình chắc chắn sẽ bị Underfitting vì dữ liệu quá nghèo nàn.
+
 ---
 *Cẩm nang này là bí kíp độc quyền để bạn nắm trùm dự án. Chúc bạn thành công!*
