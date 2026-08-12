@@ -86,5 +86,11 @@ A: Thay vì giữ nguyên cột Ngày (Date) dạng chuỗi (không thể tính 
 **Q5: Hạn chế của dự án này là gì và hướng phát triển tiếp theo?**
 A: Hạn chế lớn nhất là mô hình Linear Regression hiện tại chỉ nắm bắt được xu hướng tuyến tính cơ bản, chưa giải quyết triệt để các tương tác phi tuyến tính phức tạp (ví dụ: ảnh hưởng chéo giữa các sự kiện lễ hội đặc biệt). Hướng phát triển là có thể thử nghiệm nghiệm các mô hình chuyên dụng cho chuỗi thời gian như ARIMA, Prophet, hoặc mạng LSTM (nếu lượng dữ liệu đủ lớn), cũng như bổ sung thêm dữ liệu ngoại cảnh (thời tiết, chiến dịch marketing) để tăng độ chính xác.
 
+**Q6: So với yêu cầu gốc của đề bài (có nhắc đến Customer demographics, Marketing campaign, Reviews), tại sao mô hình này lại không có những biến đó?**
+A: Đề bài yêu cầu lý tưởng nhất là có các dữ liệu về khách hàng (tuổi, giới tính) và marketing. Tuy nhiên, bộ dữ liệu `statsfinal.csv` mà chúng ta sử dụng là dạng **dữ liệu đã được tổng hợp theo ngày (Daily Aggregated Data)** chứ không phải dữ liệu giao dịch chi tiết (Transactional Data). Vì vậy, chúng ta không có thông tin khách hàng hay lượt đánh giá (reviews). Bù lại, chúng ta đã tận dụng triệt để các **đặc trưng thời gian (Seasonal trends)** để bù đắp sự thiếu hụt này và dự báo dựa trên chu kỳ ngày/tháng/năm, hoàn toàn đáp ứng được mục tiêu cốt lõi của bài toán là "Dự báo doanh thu" (Predicting Product Sales).
+
+**Q7: Đề bài có gợi ý dùng ARIMA hoặc Prophet cho Time-Series, tại sao lại dùng Linear Regression, Decision Tree, Random Forest?**
+A: Đề bài yêu cầu rõ ở Bước 3 (Model Selection) là: "Consider regression algorithms like linear regression, decision trees, random forests, or gradient boosting". Chúng ta đã bám sát và cài đặt thành công 100% CẢ 4 thuật toán này từ con số 0 (không dùng thư viện có sẵn). Việc dùng ARIMA hay Prophet chỉ nằm ở phần "Additional Considerations" (Cân nhắc thêm). Việc dùng Linear Regression trích xuất đặc trưng thời gian thực chất hoạt động rất hiệu quả và đáp ứng đúng, đủ trọng tâm Bước 3 của đề.
+
 ---
 *Cẩm nang này là bí kíp độc quyền để bạn nắm trùm dự án. Chúc bạn thành công!*
