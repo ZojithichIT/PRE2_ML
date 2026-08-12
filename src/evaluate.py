@@ -27,5 +27,27 @@ def main():
     print("=" * 60)
     print(f"Features used ({len(data['features'])}): {', '.join(data['features'])}")
 
+    # VISUALIZATION
+    try:
+        import matplotlib.pyplot as plt
+        models = list(data['results'].keys())
+        rmse_scores = [data['results'][m]['RMSE'] for m in models]
+        
+        plt.figure(figsize=(10, 6))
+        bars = plt.bar(models, rmse_scores, color=['skyblue', 'lightcoral', 'lightgreen', 'gold'])
+        plt.title('Model Comparison - RMSE (Lower is Better)', fontsize=14)
+        plt.ylabel('Root Mean Squared Error (RMSE)', fontsize=12)
+        
+        for bar in bars:
+            yval = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2, yval + 100, f"{yval:,.0f}", ha='center', va='bottom', fontsize=10)
+            
+        plot_path = os.path.join(base_dir, "data", "processed", "model_comparison.png")
+        plt.savefig(plot_path)
+        plt.close()
+        print(f"\n[+] Visualization saved to: {plot_path}")
+    except ImportError:
+        print("\n[-] Matplotlib not installed. Skipping visualization.")
+
 if __name__ == "__main__":
     main()

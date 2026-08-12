@@ -37,3 +37,33 @@ if __name__ == "__main__":
     perform_univariate_analysis(df)
     perform_target_analysis(df)
     perform_correlation_analysis(df)
+    
+    # VISUALIZATION
+    try:
+        import matplotlib.pyplot as plt
+        import seaborn as sns
+        
+        # 1. Target Distribution Plot
+        plt.figure(figsize=(10, 5))
+        sns.histplot(df['Total_Sales'], bins=50, kde=True, color='purple')
+        plt.title('Distribution of Total Sales')
+        plt.xlabel('Total Sales')
+        plt.ylabel('Frequency')
+        target_path = os.path.join(base_dir, "data", "processed", "target_distribution.png")
+        plt.savefig(target_path)
+        plt.close()
+        print(f"\n[+] Saved target distribution plot to: {target_path}")
+        
+        # 2. Correlation Heatmap
+        plt.figure(figsize=(10, 8))
+        num_cols = ['Q-P1', 'Q-P2', 'Q-P3', 'Q-P4', 'S-P1', 'S-P2', 'S-P3', 'S-P4', 'Total_Sales']
+        corr = df[num_cols].corr()
+        sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f", linewidths=.5)
+        plt.title('Correlation Heatmap')
+        corr_path = os.path.join(base_dir, "data", "processed", "correlation_heatmap.png")
+        plt.savefig(corr_path)
+        plt.close()
+        print(f"[+] Saved correlation heatmap to: {corr_path}")
+        
+    except ImportError:
+        print("\n[-] Matplotlib/Seaborn not installed. Skipping visualization.")
