@@ -52,7 +52,6 @@ if __name__ == "__main__":
         target_path = os.path.join(base_dir, "data", "processed", "target_distribution.png")
         plt.savefig(target_path)
         plt.close()
-        print(f"\n[+] Saved target distribution plot to: {target_path}")
         
         # 2. Correlation Heatmap
         plt.figure(figsize=(10, 8))
@@ -63,7 +62,36 @@ if __name__ == "__main__":
         corr_path = os.path.join(base_dir, "data", "processed", "correlation_heatmap.png")
         plt.savefig(corr_path)
         plt.close()
-        print(f"[+] Saved correlation heatmap to: {corr_path}")
+        
+        # 3. Time Series Plot
+        df['Date'] = pd.to_datetime(df['Date'])
+        plt.figure(figsize=(15, 6))
+        plt.plot(df['Date'], df['Total_Sales'], color='teal', linewidth=0.8)
+        plt.title('Total Sales Over Time')
+        plt.xlabel('Date')
+        plt.ylabel('Total Sales')
+        ts_path = os.path.join(base_dir, "data", "processed", "sales_over_time.png")
+        plt.savefig(ts_path)
+        plt.close()
+        
+        # 4. Boxplot for Outliers
+        plt.figure(figsize=(8, 5))
+        sns.boxplot(x=df['Total_Sales'], color='orange')
+        plt.title('Boxplot of Total Sales (Outlier Detection)')
+        box_path = os.path.join(base_dir, "data", "processed", "sales_boxplot.png")
+        plt.savefig(box_path)
+        plt.close()
+        
+        # 5. Product Revenue Contribution
+        plt.figure(figsize=(8, 8))
+        product_sales = df[['S-P1', 'S-P2', 'S-P3', 'S-P4']].sum()
+        plt.pie(product_sales, labels=product_sales.index, autopct='%1.1f%%', startangle=140, colors=['skyblue', 'lightgreen', 'lightcoral', 'gold'])
+        plt.title('Revenue Contribution by Product')
+        pie_path = os.path.join(base_dir, "data", "processed", "product_revenue_pie.png")
+        plt.savefig(pie_path)
+        plt.close()
+        
+        print("\n[+] 5 EDA Visualizations saved to data/processed/")
         
     except ImportError:
         print("\n[-] Matplotlib/Seaborn not installed. Skipping visualization.")
